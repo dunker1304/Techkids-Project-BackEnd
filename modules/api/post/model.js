@@ -11,11 +11,11 @@ const CommentSchema = new Schema({
 const PostModel =  new Schema(
 { 
   title :{type: String, default:''},
-  like:{type:number ,default:0},
-  view:{type:number,default:0},
+  like:{type:Number ,default:0},
+  view:{type:Number,default:0},
   description:{type:String,default:''},
   author:{type:Schema.Types.ObjectId,ref:'User'},
-  category: { type:Number },
+  category: { type:Schema.Types.ObjectId,ref:'Category' },
   comment : [CommentSchema],
 },
 {timestamps:true}
