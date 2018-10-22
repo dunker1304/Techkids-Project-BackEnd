@@ -5,7 +5,8 @@ const CommentSchema = new Schema({
     content:{type:String, require:true},
     author:{type:Schema.Types.ObjectId,ref:'User'}
 },{
-    timestamps: true
+    timestamps: true,
+        
 })
 
 const PostModel =  new Schema(

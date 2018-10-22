@@ -10,7 +10,7 @@ UserRouter.post('/',(req,res)=>{
     console.log(req.body);
     const {username,password,avatar,quote,active} =req.body||{} ;
     console.log(avatar);
-     UserModel.create({username,password,avatar,quote,active})
+    UserModel.create({username,password,avatar,quote,active})
    .then(userCreated=>{
       
       res.status(201).json({success:1,user:userCreated});
@@ -23,8 +23,8 @@ UserRouter.get('/',(req,res)=>{
     UserModel.find({},{password:0},(err,user)=>{ 
         if(err) res.status(500).json({success:0,error:err})
         else res.json({success:1,user:user}); 
-    })
- })
+    })  
+})
 
  //update info of user
  UserRouter.put('/:id',(req,res)=>{

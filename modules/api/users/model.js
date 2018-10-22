@@ -17,7 +17,7 @@ const UserModel = new Schema(
 UserModel.pre('save', function(next){
     
     if ( this.isModified('password')) {
-        console.log('change')
+        console.log('change');
         const salt= brcypt.genSaltSync(10);
         const hashCode= brcypt.hashSync(this.password,salt);
         this.password= hashCode;

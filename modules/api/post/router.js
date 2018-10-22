@@ -6,8 +6,8 @@ const PostModel = require('../post/model');
 //create Post
 
 PostRouter.post('/',(req,res)=>{
-    const {title,description,author,category}= req.body||{};
-    const post = {title,description,author,category};
+    const {title,description,author,category,comment}= req.body||{};
+    const post = {title,description,author,category,comment};
     PostModel.create(post)
     .then(postCreated=>{
         res.status(201).json({success:1,postCreated:postCreated})
