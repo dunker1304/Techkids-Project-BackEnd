@@ -7,7 +7,8 @@ const UserModel = new Schema(
      password:{type:String , required:true},
      avatar:{type:String, default:''},
      quote:{type:String,default:''},
-     active :{type:Boolean , default:true }
+     active :{type:Boolean , default:true },
+    
     }, {
          timestamps:{createAt:"createAt"}
     }

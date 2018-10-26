@@ -54,10 +54,29 @@ PostRouter.get('/detailpost',(req,res) => {
     })
 })
 
-// add comment
+// increase view
 PostRouter.put('/detailpost', (req,res)=>{
     const postId = req.query.postId;
-    console.log(req.session.user);
+    // console.log(req.session.user);
+    
+    PostModel.findById(postId,(err,postfound) => {
+        if(err) res.status(500).json({ success: 0, err: err })
+        else if (postfound) {
+                    postfound.view += 1;       
+                     
+                    postfound.save((err, postUpdated) => {
+                       if(err) res.status(500).json({ success: 0, err: err })
+                       else res.json({ success: 1, post: postUpdated });                   
+                   })   
+                }
+    })   
+})
+
+
+// add comment
+PostRouter.put('/addComment',authMiddleware.authorize, (req,res)=>{
+    const postId = req.query.postId;
+    // console.log(req.session.user);
     console.log(req.body.textArea);
     PostModel.findById(postId,(err,postfound) => {
         if(err) res.status(500).json({ success: 0, err: err })
@@ -67,11 +86,46 @@ PostRouter.put('/detailpost', (req,res)=>{
                         author : req.session.user
                         }
                     );
-
+                    postfound.view -= 1; 
                    postfound.save((err, postUpdated) => {
                        if(err) res.status(500).json({ success: 0, err: err })
-                       else res.json({ success: 1, post: postUpdated });                   
+                       else //res.redirect(`http://localhost:3000/detailpost?postId=${postId}`)
+                       res.json({ success: 1, post: postUpdated });                   
                    })
-                }})
-            }) 
+                }
+    })   
+})
+
+// add likedBy
+PostRouter.put('/likedBy', authMiddleware.authorize,(req,res)=>{
+    const postId = req.query.postId;
+    // console.log(req.session.user);
+    
+    PostModel.findById(postId,(err,postfound) => {
+        if(err) res.status(500).json({ success: 0, err: err })
+        else if (postfound) {
+            let checkUser = false;
+                for(let i=0;i<postfound.likedBy.length;i++){
+                    if(postfound.likedBy[i] === req.session.user){
+                        checkUser = true;
+                        break;
+                    }
+                }
+                if(!checkUser){
+                    postfound.likedBy.push(
+                        req.session.user
+                    );
+                    postfound.like += 1;  
+                    postfound.view -= 1;      
+                }
+                    
+                     
+                    postfound.save((err, postUpdated) => {
+                       if(err) res.status(500).json({ success: 0, err: err })
+                       else res.json({ success: 1, post: postUpdated });                   
+                   })   
+                }
+    })   
+})
+
 module.exports = PostRouter;

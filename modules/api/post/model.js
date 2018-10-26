@@ -17,7 +17,8 @@ const PostModel =  new Schema(
   description:{type:String,default:''},
   author:{type:Schema.Types.ObjectId,ref:'User'},
   category: { type:Schema.Types.ObjectId,ref:'Category' },
-  comment : {type: [CommentSchema], default:[]}
+  comment : {type: [CommentSchema], default:[]},
+  likedBy : {type:[String], default:[]}
 },
 {timestamps:true}
 )
