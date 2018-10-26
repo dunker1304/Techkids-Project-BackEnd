@@ -7,8 +7,8 @@ const CategoryRouter= require('./modules/api/category/router');
 const PostRouter = require('./modules/api/post/router');
 const AuthRouter= require('./modules/api/auth/router');
 const cors= require('cors');
-var flash = require('connect-flash');
-const passport= require('passport')
+
+
 
 const app = express();
 
@@ -53,9 +53,7 @@ app.get('/', (request,response)=>{
 
 app.use(bodyParser.urlencoded({extended:false}));
 app.use(bodyParser.json({extended:false}));
-app.use(passport.initialize());
-app.use(passport.session());
-app.use(flash());
+
 
 app.use('/api/user',UserRouter);
 app.use('/api/category',CategoryRouter);

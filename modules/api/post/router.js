@@ -39,4 +39,39 @@ PostRouter.get('/',(req,res)=>{
 })
  
 
+// get post by id 
+PostRouter.get('/detailpost',(req,res) => {
+    const postId = req.query.postId;
+    PostModel.findOne({_id : postId})
+        .populate('author')
+        .populate('category')
+        .exec((err,postfound) => {
+        if(err) console.log(err)
+        else
+            {
+                res.send({success:1, post : postfound})
+            }
+    })
+})
+
+// add comment
+PostRouter.put('/detailpost', (req,res)=>{
+    const postId = req.query.postId;
+    console.log(req.session.user);
+    console.log(req.body.textArea);
+    PostModel.findById(postId,(err,postfound) => {
+        if(err) res.status(500).json({ success: 0, err: err })
+               else if (postfound) {
+                    postfound.comment.push({
+                        content : req.body.textArea,
+                        author : req.session.user
+                        }
+                    );
+
+                   postfound.save((err, postUpdated) => {
+                       if(err) res.status(500).json({ success: 0, err: err })
+                       else res.json({ success: 1, post: postUpdated });                   
+                   })
+                }})
+            }) 
 module.exports = PostRouter;
