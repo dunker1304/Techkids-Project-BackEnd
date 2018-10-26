@@ -1,6 +1,7 @@
 const express= require('express');
 const UserRouter = express.Router();
 const UserModel= require('../users/model')
+const PostModel= require("../post/model")
 
 
 
@@ -8,14 +9,17 @@ const UserModel= require('../users/model')
 //create user
 UserRouter.post('/',(req,res)=>{
     console.log(req.body);
+    if(req.body.password=== req.body.re_password) {
     const {username,password,avatar,quote,active} =req.body||{} ;
     console.log(avatar);
-    UserModel.create({username,password,avatar,quote,active})
+     UserModel.create({username,password,avatar,quote,active})
    .then(userCreated=>{
-      
+      req.session.user = {userId:userCreated._id};
       res.status(201).json({success:1,user:userCreated});
+    
    })
    .catch(err=>res.status(500).json({success:0,err:err}))
+   }//end if
 })
 
 //get alluser
@@ -23,8 +27,8 @@ UserRouter.get('/',(req,res)=>{
     UserModel.find({},{password:0},(err,user)=>{ 
         if(err) res.status(500).json({success:0,error:err})
         else res.json({success:1,user:user}); 
-    })  
-})
+    })
+ })
 
  //update info of user
  UserRouter.put('/:id',(req,res)=>{
@@ -57,7 +61,21 @@ UserRouter.get('/',(req,res)=>{
       UserModel.findById( userID, (err,userFound)=>{
           if(err) res.status(500).json({success:0, err:err})
           else if(!userFound) res.status(400).json({success:0,error:"not such use"})
-          else  res.send({success:1,userFound:userFound});
+          else  {
+            PostModel.find({author: userID})
+            .sort({"view":-1})
+            .exec((err,postFound)=>{
+             if(err) res.status(500).json({success:0,error:err})
+           //  else res.status(201).json({success:1,post:postFound})
+         
+            else   res.send({success:1,userFound:userFound,post:postFound});
+            })
+
+
+          
+
+
+          }
       })
    })
 
