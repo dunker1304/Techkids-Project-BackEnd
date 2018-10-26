@@ -19,10 +19,15 @@ PostRouter.post('/',(req,res)=>{
 
 // get all post and sort by timestamps
 PostRouter.get('/',(req,res)=>{
+    const page = req.query.page;
+    const itemPerPage = 1;
+    console.log(page);
     PostModel.find({})
     .populate('author')
     .populate('category')
     .sort({"createdAt":-1})
+    .skip((page-1)*itemPerPage)
+    .limit(itemPerPage)
     .exec((err,post)=>{
         if(err) res.status(500).json({success:0,error:err})
         else res.status(201).json({success:1,post:post})
