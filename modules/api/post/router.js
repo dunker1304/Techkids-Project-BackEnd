@@ -22,7 +22,7 @@ PostRouter.post('/',authMiddleware.authorize,(req,res)=>{
 })
 
 // get all post and sort by timestamps
-PostRouter.get('/',(req,res)=>{
+PostRouter.get('/newpost',(req,res)=>{
     const page = req.query.page;
     const itemPerPage = 1;
     console.log(page);
@@ -36,8 +36,25 @@ PostRouter.get('/',(req,res)=>{
         if(err) res.status(500).json({success:0,error:err})
         else res.status(201).json({success:1,post:post})
     })
-})
- 
+});
+
+
+// get all post and sort by view
+PostRouter.get('/popularpost',(req,res)=>{
+    const page = req.query.page;
+    const itemPerPage = 1;
+    console.log(page);
+    PostModel.find({})
+    .populate('author')
+    .populate('category')
+    .sort({"view":-1})
+    .skip((page-1)*itemPerPage)
+    .limit(itemPerPage)
+    .exec((err,post)=>{
+        if(err) res.status(500).json({success:0,error:err})
+        else res.status(201).json({success:1,post:post})
+    })
+});
 
 // get post by id 
 PostRouter.get('/detailpost',(req,res) => {
