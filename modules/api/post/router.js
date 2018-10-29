@@ -21,6 +21,18 @@ PostRouter.post('/',authMiddleware.authorize,(req,res)=>{
     })
 })
 
+// get all post
+PostRouter.get('/',(req,res)=>{
+    PostModel.find({})
+    .populate('author')
+    .populate('category')
+    .exec((err,post)=>{
+        if(err) res.status(500).json({success:0,error:err})
+        else res.status(201).json({success:1,NumberOfPosts:post.length})
+    })
+});
+
+
 // get all post and sort by timestamps
 PostRouter.get('/newpost',(req,res)=>{
     const page = req.query.page;
