@@ -54,7 +54,7 @@ AuthRouter.post('/login', (request, response)=>{
                 response.send(userFound);
               
             }
-            else response.status(401).json({success:0,error:"Password Wrong!!!"});
+            else response.status(402).json({success:0,error:"Password Wrong!!!"});
         }
     })
 })
