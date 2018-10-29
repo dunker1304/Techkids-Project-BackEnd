@@ -35,7 +35,7 @@ PostRouter.get('/',(req,res)=>{
 
 // get all post and sort by timestamps
 PostRouter.get('/newpost',(req,res)=>{
-    const page = req.query.page;
+    const page = req.query.newPostPage;
     const itemPerPage = 1;
     console.log(page);
     PostModel.find({})
@@ -53,7 +53,7 @@ PostRouter.get('/newpost',(req,res)=>{
 
 // get all post and sort by view
 PostRouter.get('/popularpost',(req,res)=>{
-    const page = req.query.page;
+    const page = req.query.popularPostPage;
     const itemPerPage = 1;
     console.log(page);
     PostModel.find({})
