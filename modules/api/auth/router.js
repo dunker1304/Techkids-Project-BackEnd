@@ -59,9 +59,9 @@ AuthRouter.post('/login', (request, response)=>{
     })
 })
 
-// AuthRouter.delete('/logout',(request,response)=>{
-//     request.session.destroy();
-//     response.send({success:1,message:"Logout Successfully"});
-// })
+AuthRouter.delete('/logout',(request,response)=>{
+    request.session.destroy();
+    response.send({success:1,message:"Logout Successfully"});
+})
 
 module.exports = AuthRouter;
