@@ -46,10 +46,7 @@ app.use(session({
     }
 }));
 
-app.get('/', (request,response)=>{
-    console.log(request.session)
-    response.send("Psychology");
-});
+
 
 
 
@@ -61,6 +58,14 @@ app.use('/api/user',UserRouter);
 app.use('/api/category',CategoryRouter);
 app.use('/api/post',PostRouter);
 app.use('/api/auth',AuthRouter);
+
+
+
+// app.use(express.static('./build'));
+
+// app.get('/', (request,response)=>{
+//     response.sendFile('./build/index.html');
+// });
 
 //mongodb://admin:psychology123@ds137283.mlab.com:37283/psychology_web
 mongoose.connect('mongodb://admin:psychology123@ds137283.mlab.com:37283/psychology_web', {useNewUrlParser: true},error=>{
