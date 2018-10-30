@@ -8,7 +8,7 @@ const PostRouter = require('./modules/api/post/router');
 const AuthRouter= require('./modules/api/auth/router');
 const cors= require('cors');
 
-
+const ViewModel= require('./modules/api/view/model');
 
 const app = express();
 
@@ -51,6 +51,8 @@ app.get('/', (request,response)=>{
     response.send("Psychology");
 });
 
+
+
 app.use(bodyParser.urlencoded({extended:false}));
 app.use(bodyParser.json({extended:false}));
 
@@ -65,6 +67,38 @@ mongoose.connect('mongodb://admin:psychology123@ds137283.mlab.com:37283/psycholo
     if(error) console.log(error);
     else console.log("Database connect success full")
 })
+
+
+app.put('/',(req,res)=>{
+    ViewModel.find({})
+    .limit(1)
+    .exec((err,viewFound)=>{
+        if(err) console.log(err)
+        else {
+     
+           viewFound[0].numberView+=1;
+           viewFound[0].save((err,viewUpdated)=>{
+            if(err) res.send(err)
+            else  res.send(viewUpdated)
+
+           })
+
+        }
+    })
+})
+
+// app.post('/',(req,res)=>{
+//     const viewCount =1;
+//     ViewModel.create({viewCount})
+//     .then(viewCreated=>{
+//      res.send(viewCreated)
+
+//     })
+//     .catch (err=>{
+//         res.send(err);
+//     })
+
+// })
 
 
 
