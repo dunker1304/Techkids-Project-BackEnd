@@ -59,7 +59,9 @@ app.use('/api/category',CategoryRouter);
 app.use('/api/post',PostRouter);
 app.use('/api/auth',AuthRouter);
 
-
+app.get('/',(request,response)=>{
+    response.send("Psychology Web");
+})
 
 // app.use(express.static('./build'));
 
