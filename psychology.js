@@ -38,7 +38,7 @@ app.use((req, res, next) => {
     if (req.method === "OPTIONS") {
         res.setHeader('Access-Control-Allow-Origin', req.headers.origin);
       } else {
-        res.setHeader('Access-Control-Allow-Origin', '*');
+        res.setHeader('Access-Control-Allow-Origin', 'https://psychologist.herokuapp.com');
       }
     res.setHeader("Access-Control-Allow-Credentials", true);
   
