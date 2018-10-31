@@ -24,7 +24,7 @@ app.use(session({
     }
 }));
 
-app.use(cors({ origin: 'https://psychologist-frontend.herokuapp.com/' , credentials :  true,  methods: 'DELETE,GET,PUT,POST,OPTIONS', allowedHeaders: 'Content-Type,Authorization,Access-Control-Allow-Origin' }));
+app.use(cors({ origin: 'https://psychologist.herokuapp.com' , credentials :  true,  methods: 'DELETE,GET,PUT,POST,OPTIONS', allowedHeaders: 'Content-Type,Authorization,Access-Control-Allow-Origin' }));
 
 
 
