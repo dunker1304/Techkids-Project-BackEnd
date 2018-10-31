@@ -34,7 +34,7 @@ const app = express();
 //   });
 
 
-app.use(cors({ origin: 'https://psychologist-frontend.herokuapp.com/' , credentials :  true,  methods: 'DELETE,GET,PUT,POST,OPTIONS', allowedHeaders: 'Content-Type,Authorization' }));
+app.use(cors({ origin: 'https://psychologist-frontend.herokuapp.com/' , credentials :  true,  methods: 'DELETE,GET,PUT,POST,OPTIONS', allowedHeaders: 'Content-Type,Authorization,Access-Control-Allow-Origin' }));
 app.use(session({
     secret: "keyboard cat",
     resave : false,
