@@ -12,26 +12,33 @@ const ViewModel= require('./modules/api/view/model');
 
 const app = express();
 
-app.use((req, res, next) => {
-    res.setHeader("X-Frame-Options", "ALLOWALL");
-    res.setHeader(
-      "Access-Control-Allow-Methods",
-      "POST, GET, PUT, DELETE, OPTIONS"
-    );
+// app.use((req, res, next) => {
+//     res.setHeader("X-Frame-Options", "ALLOWALL");
+//     res.setHeader(
+//       "Access-Control-Allow-Methods",
+//       "POST, GET, PUT, DELETE, OPTIONS"
+//     );
   
-    if (req.method === "OPTIONS") {
-        res.setHeader('Access-Control-Allow-Origin', req.headers.origin);
-      } else {
-        res.setHeader('Access-Control-Allow-Origin', '*');
-      }
-    res.setHeader("Access-Control-Allow-Credentials", true);
+//     if (req.method === "OPTIONS") {
+//         res.setHeader('Access-Control-Allow-Origin', req.headers.origin);
+//       } else {
+//         res.setHeader('Access-Control-Allow-Origin', '*');
+//       }
+//     res.setHeader("Access-Control-Allow-Credentials", true);
   
-    res.setHeader(
-      "Access-Control-Allow-Headers",
-      "Authorization, Origin, X-Requested-With, Content-Type, Accept"
-    );
+//     res.setHeader(
+//       "Access-Control-Allow-Headers",
+//       "Authorization, Origin, X-Requested-With, Content-Type, Accept"
+//     );
+//     next();
+//   });
+
+app.use(function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
     next();
   });
+
 
 
 app.use(cors({ origin: 'https://psychologist-frontend.herokuapp.com/' , credentials :  true,  methods: 'DELETE,GET,PUT,POST,OPTIONS', allowedHeaders: 'Content-Type,Authorization,Access-Control-Allow-Origin' }));
