@@ -55,6 +55,21 @@ UserRouter.put('/:id', (req, res) => {
     })
 })
 
+// get user comment by id
+UserRouter.get('/comment',(req,res) => {
+    const userId = req.query.userId;
+    PostModel.findOne({_id : userId})
+        .exec((err,userFound) => {
+        if(err) console.log(err)
+        else
+            {
+                res.send({success:1, user : userFound})
+            }
+    })
+})
+
+
+
 //get user by id
 UserRouter.get('/:id', (req, res) => {
     const userID = req.params.id;
